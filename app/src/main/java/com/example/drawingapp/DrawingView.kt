@@ -109,6 +109,14 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             invalidate()
         }
     }
+<<<<<<< HEAD
+=======
+    fun onClickClear(){
+        paths.clear()
+        undoPaths.clear()
+        invalidate()
+    }
+>>>>>>> d58834a (Initial commit)
 
     internal inner class CustomPath(var color: Int, var brushThickness: Float) : Path() {
     }

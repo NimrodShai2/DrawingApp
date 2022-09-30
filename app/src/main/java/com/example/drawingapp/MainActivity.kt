@@ -81,6 +81,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+<<<<<<< HEAD
+=======
+        ib_clear.setOnClickListener{
+            drawing_view.onClickClear()
+            iv_background.setImageURI(null)
+        }
+>>>>>>> d58834a (Initial commit)
 
     }
 

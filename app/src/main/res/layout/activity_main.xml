@@ -129,7 +129,11 @@
             android:contentDescription="Select Brush Size"
             android:scaleType="fitXY"
             android:src="@drawable/paint"
+<<<<<<< HEAD
             android:layout_margin="3dp"/>
+=======
+            android:layout_margin="2dp"/>
+>>>>>>> d58834a (Initial commit)
 
         <ImageButton
             android:id="@+id/ib_gallery"
@@ -138,7 +142,11 @@
             android:contentDescription="Select image from gallery"
             android:scaleType="fitXY"
             android:src="@drawable/ic_gallery"
+<<<<<<< HEAD
             android:layout_margin="3dp"/>
+=======
+            android:layout_margin="2dp"/>
+>>>>>>> d58834a (Initial commit)
 
         <ImageButton
             android:id="@+id/ib_undo"
@@ -147,7 +155,11 @@
             android:contentDescription="undo"
             android:scaleType="fitXY"
             android:src="@drawable/ic_undo"
+<<<<<<< HEAD
             android:layout_margin="3dp"/>
+=======
+            android:layout_margin="2dp"/>
+>>>>>>> d58834a (Initial commit)
         <ImageButton
             android:id="@+id/ib_redo"
             android:layout_width="50dp"
@@ -155,7 +167,11 @@
             android:contentDescription="redo"
             android:scaleType="fitXY"
             android:src="@drawable/ic_redo"
+<<<<<<< HEAD
             android:layout_margin="3dp"/>
+=======
+            android:layout_margin="2dp"/>
+>>>>>>> d58834a (Initial commit)
         <ImageButton
             android:id="@+id/ib_save"
             android:layout_width="50dp"
@@ -163,7 +179,19 @@
             android:contentDescription="save"
             android:scaleType="fitXY"
             android:src="@drawable/ic_save"
+<<<<<<< HEAD
             android:layout_margin="3dp"/>
+=======
+            android:layout_margin="2dp"/>
+        <ImageButton
+            android:id="@+id/ib_clear"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="clear"
+            android:scaleType="fitXY"
+            android:src="@color/white"
+            android:layout_margin="2dp"/>
+>>>>>>> d58834a (Initial commit)
     </LinearLayout>
 
 
