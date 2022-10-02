@@ -129,7 +129,7 @@
             android:contentDescription="Select Brush Size"
             android:scaleType="fitXY"
             android:src="@drawable/paint"
-            android:layout_margin="3dp"/>
+            android:layout_margin="1dp"/>
 
 
         <ImageButton
@@ -139,7 +139,7 @@
             android:contentDescription="Select image from gallery"
             android:scaleType="fitXY"
             android:src="@drawable/ic_gallery"
-            android:layout_margin="3dp"/>
+            android:layout_margin="1dp"/>
 
         <ImageButton
             android:id="@+id/ib_undo"
@@ -148,7 +148,7 @@
             android:contentDescription="undo"
             android:scaleType="fitXY"
             android:src="@drawable/ic_undo"
-            android:layout_margin="3dp"/>
+            android:layout_margin="1dp"/>
         <ImageButton
             android:id="@+id/ib_redo"
             android:layout_width="50dp"
@@ -156,7 +156,7 @@
             android:contentDescription="redo"
             android:scaleType="fitXY"
             android:src="@drawable/ic_redo"
-            android:layout_margin="3dp"/>
+            android:layout_margin="1dp"/>
         <ImageButton
             android:id="@+id/ib_save"
             android:layout_width="50dp"
@@ -164,7 +164,7 @@
             android:contentDescription="save"
             android:scaleType="fitXY"
             android:src="@drawable/ic_save"
-            android:layout_margin="3dp"/>
+            android:layout_margin="1dp"/>
         <ImageButton
             android:id="@+id/ib_clear"
             android:layout_width="50dp"
@@ -172,7 +172,15 @@
             android:contentDescription="clear"
             android:scaleType="fitXY"
             android:src="@color/white"
-            android:layout_margin="2dp"/>
+            android:layout_margin="1dp"/>
+        <ImageButton
+            android:id="@+id/ib_crop"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="clear"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_crop"
+            android:layout_margin="1dp"/>
     </LinearLayout>
 
 

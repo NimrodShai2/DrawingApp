@@ -45,10 +45,6 @@ class MainActivity : AppCompatActivity() {
                 val name = it.key
                 val isGranted = it.value
                 if (isGranted) {
-                    Toast.makeText(
-                        this,
-                        "Permission for $name granted", Toast.LENGTH_SHORT
-                    ).show()
                     val pickIntent = Intent(
                         Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                     )
