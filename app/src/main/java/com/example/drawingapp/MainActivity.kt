@@ -3,12 +3,14 @@ package com.example.drawingapp
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.media.MediaScannerConnection
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,14 +18,18 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.forEach
 import androidx.lifecycle.lifecycleScope
+import com.canhub.cropper.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_brush_size.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
@@ -31,6 +37,14 @@ import java.io.File
 import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
+
+
+    private val cropImage =
+        registerForActivityResult(CropImageContract()) { result ->
+            if (result.isSuccessful) {
+                iv_background.setImageURI(result.uriContent)
+            }
+        }
 
     private val openGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -70,23 +84,28 @@ class MainActivity : AppCompatActivity() {
         }
         ib_undo.setOnClickListener { drawing_view.onClickUndo() }
         ib_redo.setOnClickListener { drawing_view.onClickRedo() }
-        ib_save.setOnClickListener{
-            if (isReadPermissionGranted()){
-                lifecycleScope.launch{
+        ib_save.setOnClickListener {
+            if (isReadPermissionGranted()) {
+                lifecycleScope.launch {
                     saveBitMapFile(getBitMapFromView(fl_image))
                 }
             }
         }
-        ib_clear.setOnClickListener{
+        ib_clear.setOnClickListener {
             drawing_view.onClickClear()
             iv_background.setImageURI(null)
         }
+        ib_crop.setOnClickListener{ startCrop() }
+
 
     }
 
-    private fun isReadPermissionGranted() : Boolean{
-        val res = ContextCompat.checkSelfPermission(this,
-        Manifest.permission.READ_EXTERNAL_STORAGE)
+
+    private fun isReadPermissionGranted(): Boolean {
+        val res = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
         return res == PackageManager.PERMISSION_GRANTED
     }
 
@@ -103,8 +122,10 @@ class MainActivity : AppCompatActivity() {
 
         } else {
             requestPermission.launch(
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
             )
         }
     }
@@ -208,15 +229,23 @@ class MainActivity : AppCompatActivity() {
         return res
     }
 
-    private fun shareImage(result : String){
-        MediaScannerConnection.scanFile(this, arrayOf(result), null){
-            path, uri ->
+    private fun shareImage(result: String) {
+        MediaScannerConnection.scanFile(this, arrayOf(result), null) { path, uri ->
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
             shareIntent.type = "image/png"
             startActivity(Intent.createChooser(shareIntent, "Share Via:"))
         }
+    }
+
+    private fun startCrop() {
+        // start picker to get image for cropping and then use the image in cropping activity
+        cropImage.launch(
+            options {
+                setImageSource( includeGallery = true, includeCamera = false)
+            }
+        )
     }
 
 

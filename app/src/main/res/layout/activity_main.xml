@@ -177,7 +177,7 @@
             android:id="@+id/ib_crop"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:contentDescription="clear"
+            android:contentDescription="add cropped image"
             android:scaleType="fitXY"
             android:src="@drawable/ic_crop"
             android:layout_margin="1dp"/>
