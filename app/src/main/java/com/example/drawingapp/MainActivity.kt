@@ -26,6 +26,7 @@ import androidx.core.net.toUri
 import androidx.core.view.forEach
 import androidx.lifecycle.lifecycleScope
 import com.canhub.cropper.*
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_brush_size.*
 import kotlinx.coroutines.Dispatchers
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK && result.data != null) {
                 iv_background.setImageURI(result.data?.data)
+                iv_background.tag = result.data?.data.toString()
             }
         }
 
@@ -94,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         ib_clear.setOnClickListener {
             drawing_view.onClickClear()
             iv_background.setImageURI(null)
+            iv_background.tag = ""
         }
         ib_crop.setOnClickListener{ startCrop() }
 
@@ -197,7 +200,8 @@ class MainActivity : AppCompatActivity() {
                     mBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
                     val file = File(
                         externalCacheDir?.absoluteFile.toString()
-                                + File.separator + "DrawingApp_" + System.currentTimeMillis() / 1000 + ".png"
+                                + File.separator + "DrawingApp_" + System.currentTimeMillis() / 1000
+                                + ".png"
                     )
 
                     val fo = FileOutputStream(file)
@@ -241,11 +245,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun startCrop() {
         // start picker to get image for cropping and then use the image in cropping activity
-        cropImage.launch(
-            options {
-                setImageSource( includeGallery = true, includeCamera = false)
-            }
-        )
+        val currUri = iv_background.tag.toString().toUri()
+        if (currUri == Uri.EMPTY){
+            Snackbar.make(drawing_view, "No Image to crop", Snackbar.LENGTH_SHORT).show()
+        }
+        else {
+            cropImage.launch(
+                options(uri = currUri) {
+                    setGuidelines(CropImageView.Guidelines.ON)
+                    setOutputCompressFormat(Bitmap.CompressFormat.PNG)
+                }
+            )
+        }
     }
 
 
